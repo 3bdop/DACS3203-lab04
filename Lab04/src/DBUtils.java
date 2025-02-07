@@ -1,11 +1,11 @@
 import java.sql.*;
 
 public class DBUtils {
-    private static String url = "jdbc:mysql://localhost:3306/Lab03";
+    private static String url = "jdbc:mysql://localhost:3306/Lab04";
 
     //? created this user with minimal control (SELECT, INSERT, UPDATE, FILE)
-    private static String appUsername = "abood";
-    private static String appPassword = "12345";
+    private static String appUsername = "root";
+    private static String appPassword = "";
 
     public static Connection establishConnection(){
         Connection con = null;
