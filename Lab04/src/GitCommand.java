@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,10 +31,12 @@ public class GitCommand {
             }
         });
 
-        gitLayout.getChildren().addAll(new Label("Command Number 1-5:"), idField
+        gitLayout.getChildren().addAll(new Label("Command Number 1-5:"), idField, showButton
                );
 
-        gitScene = new Scene(gitLayout, 250, 100);
+        idField.setOnAction(event -> getDesc());
+
+        gitScene = new Scene(gitLayout, 350, 150);
         stage.setTitle("Git Command");
         stage.setScene(gitScene);
         stage.show();
@@ -46,7 +47,7 @@ public class GitCommand {
         Connection con = DBUtils.establishConnection();
 
         //* Secure query:
-        String query = "SELECT * FROM users WHERE id =?;";
+        String query = "SELECT * FROM git WHERE id =?;";
 
         try {
             /**/
@@ -56,13 +57,17 @@ public class GitCommand {
 
             System.out.println(statement);
             ResultSet rs = statement.executeQuery();
-//
-//            if (rs.next()) {
-//                UserChangePassword changePassword = new UserChangePassword(stage, username);
-//                changePassword.initializeComponents();
-//            } else {
-//                showAlert("Authentication Failed", "Invalid username or password.");
-//            }
+
+            if (rs.next()) {
+                // Retrieve the Git command and description from the ResultSet
+                String gitCommand = rs.getString("command");
+                String gitDescription = rs.getString("description");
+
+                CommandInfo getCommandInfo = new CommandInfo(stage,gitCommand,gitDescription );
+                getCommandInfo.initializeComponents();
+            } else {
+                showAlert("Incorrect Command ID", "Please choose a number from 1-5.");
+            }
             DBUtils.closeConnection(con, statement);
         } catch (Exception e) {
             //We will still print the exception error in the console to help us in the development
@@ -80,8 +85,8 @@ public class GitCommand {
         alert.showAndWait();
     }
 
-//    private void goToDesc(){
-//        UserSignup singUp = new UserSignup(stage);
-//       singUp.initializeComponents();
-//    }
+    private void showResult(){
+//        CommandInfo show = new CommandInfo()
+    }
+
 }
