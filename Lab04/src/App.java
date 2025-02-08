@@ -6,8 +6,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         //this.primaryStage = primaryStage;
-        GitCommand login = new GitCommand(primaryStage);
-        login.initializeComponents();
+        GitCommand go = new GitCommand(primaryStage);
+        go.initializeComponents();
     }
 
     public static void main(String[] args) {
